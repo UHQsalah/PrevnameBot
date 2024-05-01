@@ -19,7 +19,12 @@ module.exports = {
         let desc = "Aucune donnée trouvée";
 
         if (data.length > 0) {
-            desc = data.map(m => `**${m.ID.split('_')[3]}**`).join("\n");
+            desc = data.map(m => {
+                const timestamp = new Date(parseInt(m.ID.split('_')[2]) * 1000);
+                const formattedDate = `${timestamp.getDate().toString().padStart(2, '0')}/${(timestamp.getMonth() + 1).toString().padStart(2, '0')}/${timestamp.getFullYear()}`
+                const prevname = m.ID.split('_')[3];
+                return `**${formattedDate}** - ${prevname}`;
+            }).join("\n");
         }
 
         const embed = {
